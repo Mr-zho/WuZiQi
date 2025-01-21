@@ -28,6 +28,8 @@ protected:
     void paintEvent(QPaintEvent *event) override;
     /* 鼠标移动事件 */
     void mouseMoveEvent(QMouseEvent *event) override;
+    /* 鼠标按压事件 */
+    void mousePressEvent(QMouseEvent *event) override;
 private:
     /* 棋盘的尺寸 */
     static const int m_boardSize = 15;

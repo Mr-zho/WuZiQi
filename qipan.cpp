@@ -53,6 +53,23 @@ void QiPan::paintEvent(QPaintEvent *event)
         painter.drawEllipse(QPoint(m_margin + m_hoverRow * m_cellSize, m_margin + m_hoverCol * m_cellSize), m_cellSize / 6, m_cellSize / 6);
     }
 
+    /* 绘制棋子 */
+    for (int row = 0; row < m_boardSize; row++)
+    {
+        for (int col = 0; col < m_boardSize; col++)
+        {
+            if (m_board[row][col] == PLAYER)
+            {
+                painter.setBrush(Qt::black);
+                painter.drawEllipse(QPoint(m_margin + row * m_cellSize, m_margin + col * m_cellSize), m_cellSize / 3, m_cellSize / 3);
+            }
+            else if (m_board[row][col] == COMPUTER)
+            {
+                painter.setBrush(Qt::white);
+                painter.drawEllipse(QPoint(m_margin + row * m_cellSize, m_margin + col * m_cellSize), m_cellSize / 3, m_cellSize / 3);
+            }
+        }
+    }
 }
 
 
@@ -88,5 +105,23 @@ void QiPan::mouseMoveEvent(QMouseEvent *event)
             /* 更新绘画事件 */
             update();
         }
+    }
+}
+
+
+
+/* 鼠标按压事件 */
+void QiPan::mousePressEvent(QMouseEvent *event)
+{
+    int row = (event->x() - m_margin + m_cellSize / 2) / m_cellSize;
+    int col = (event->y() - m_margin + m_cellSize / 2) / m_cellSize;
+
+    /* 判断(row,col)是否在棋盘中 */
+    if ((row >=0 && row < m_boardSize) && (col >= 0 && col < m_boardSize) && m_board[row][col] == EMPTY)
+    {
+        m_board[row][col] = PLAYER;
+
+        /* 更新画面 - 绘图事件 */
+        update();
     }
 }
