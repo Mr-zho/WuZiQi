@@ -21,7 +21,6 @@ MainWindow::MainWindow(QWidget *parent) :
     setCentralWidget(centerWidget);
     QVBoxLayout * layout = new QVBoxLayout(centerWidget);
     layout->addWidget(m_qipan);
-
 }
 
 MainWindow::~MainWindow()
