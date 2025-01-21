@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "qipan.h"
+
 
 namespace Ui {
 class MainWindow;
@@ -17,6 +19,9 @@ public:
 
 private:
     Ui::MainWindow *ui;
+
+    /* 棋盘类 */
+    QiPan * m_qipan;
 };
 
 #endif // MAINWINDOW_H
