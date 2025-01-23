@@ -2,6 +2,7 @@
 #include <QPainter>
 #include <QColor>
 #include <QDebug>
+#include <QMessageBox>
 
 QiPan::QiPan(QWidget *parent) : QWidget(parent)
 {
@@ -123,5 +124,71 @@ void QiPan::mousePressEvent(QMouseEvent *event)
 
         /* 更新画面 - 绘图事件 */
         update();
+
+        if (isCheckWin(row, col, PLAYER) == true)
+        {
+            QMessageBox::information(this, "游戏结束", "玩家获胜");
+        }
     }
+}
+
+
+
+/* 判断棋手是否获胜 */
+bool QiPan::isCheckWin(int row, int col, Role role)
+{
+    /* 四个方向 */
+    int directions[4][2] =
+    {
+        {1, 0},     /* 水平方向 */
+        {0, 1},     /* 竖直方向 */
+        {1, -1},    /* 左上右下 */
+        {1, 1},    /* 左下右上 */
+    };
+
+
+    /* 遍历每一个方向 */
+    for (int direct = 0; direct < 4; direct++)
+    {
+        /* 计数 */
+        int cnt = 1;
+
+        /* 向一个方向去遍历 */
+        for (int idx = 1; idx < 5; idx++)
+        {
+            int newRow = row + directions[direct][0] * idx;
+            int newCol = col + directions[direct][1] * idx;
+
+            if ((newRow >=0 && newRow < m_boardSize) && (newCol >= 0 && newCol < m_boardSize) && m_board[newRow][newCol] == role)
+            {
+                cnt++;
+            }
+            else
+            {
+                break;
+            }
+        }
+
+        /* 向相反的方向探测 */
+        for (int idx = 1; idx < 5; idx++)
+        {
+            int newRow = row - directions[direct][0] * idx;
+            int newCol = col - directions[direct][1] * idx;
+
+            if ((newRow >=0 && newRow < m_boardSize) && (newCol >= 0 && newCol < m_boardSize) && m_board[newRow][newCol] == role)
+            {
+                cnt++;
+            }
+            else
+            {
+                break;
+            }
+        }
+
+        if (cnt >= 5)
+        {
+            return true;
+        }
+    }
+    return false;
 }

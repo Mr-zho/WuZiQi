@@ -19,6 +19,9 @@ class QiPan : public QWidget
 public:
     explicit QiPan(QWidget *parent = nullptr);
 
+public:
+    /* 判断棋手是否获胜 */
+    bool isCheckWin(int row, int col, Role role);
 signals:
 
 public slots:
