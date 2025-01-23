@@ -22,8 +22,12 @@ public:
 public:
     /* 判断棋手是否获胜 */
     bool isCheckWin(int row, int col, Role role);
-signals:
 
+    /* 记录棋盘对应位置的玩家 */
+    void setBoardInfo(int row, int col, Role role);
+signals:
+    /* 点击信号 */
+    void chessClick(int row, int col);
 public slots:
 
 protected:

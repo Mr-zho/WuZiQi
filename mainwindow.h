@@ -16,7 +16,9 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-
+public slots:
+    /* 槽函数 */
+    void handleChessClickSlot(int row, int col);
 private:
     Ui::MainWindow *ui;
 

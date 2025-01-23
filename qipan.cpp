@@ -120,6 +120,7 @@ void QiPan::mousePressEvent(QMouseEvent *event)
     /* 判断(row,col)是否在棋盘中 */
     if ((row >=0 && row < m_boardSize) && (col >= 0 && col < m_boardSize) && m_board[row][col] == EMPTY)
     {
+#if 0
         m_board[row][col] = PLAYER;
 
         /* 更新画面 - 绘图事件 */
@@ -129,6 +130,8 @@ void QiPan::mousePressEvent(QMouseEvent *event)
         {
             QMessageBox::information(this, "游戏结束", "玩家获胜");
         }
+#endif
+        emit chessClick(row, col);
     }
 }
 
@@ -191,4 +194,14 @@ bool QiPan::isCheckWin(int row, int col, Role role)
         }
     }
     return false;
+}
+
+
+/* 记录棋盘对应位置的玩家 */
+void QiPan::setBoardInfo(int row, int col, Role role)
+{
+    if ((row >=0 && row < m_boardSize) && (col >= 0 && col < m_boardSize) && (m_board[row][col] == EMPTY))
+    {
+        m_board[row][col] = role;
+    }
 }
