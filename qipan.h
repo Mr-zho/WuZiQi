@@ -25,6 +25,12 @@ public:
 
     /* 记录棋盘对应位置的玩家 */
     void setBoardInfo(int row, int col, Role role);
+
+    /* 获取指定位置的棋子 */
+    Role getBoardInfo(int row, int col);
+
+    /* 获取棋盘的尺寸 */
+    int getBoardSize();
 signals:
     /* 点击信号 */
     void chessClick(int row, int col);

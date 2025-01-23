@@ -205,3 +205,18 @@ void QiPan::setBoardInfo(int row, int col, Role role)
         m_board[row][col] = role;
     }
 }
+
+
+
+/* 获取棋盘的尺寸 */
+int QiPan::getBoardSize()
+{
+    return m_boardSize;
+}
+
+/* 获取指定位置的棋子 */
+Role QiPan::getBoardInfo(int row, int col)
+{
+    return m_board[row][col];
+}
+

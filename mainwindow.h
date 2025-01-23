@@ -19,6 +19,12 @@ public:
 public slots:
     /* 槽函数 */
     void handleChessClickSlot(int row, int col);
+
+private:
+    /* 人机下棋 */
+    void computerMove();
+    /* 评估该坐标对于棋手的影响因素 */
+    int evaluateValue(int row, int col, Role role);
 private:
     Ui::MainWindow *ui;
 
