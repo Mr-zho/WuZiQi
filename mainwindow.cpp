@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include <QVBoxLayout>
 #include <QMessageBox>
+#include <time.h>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -13,6 +14,8 @@ MainWindow::MainWindow(QWidget *parent) :
     setWindowTitle("五子棋");
 
     m_qipan = new QiPan(this);
+
+    m_timer = new QTimer(this);
 
     /* 设置窗口的固定尺寸 */
     setFixedSize(800, 680);
@@ -26,6 +29,24 @@ MainWindow::MainWindow(QWidget *parent) :
 
     /* 信号和槽 */
     connect(m_qipan, &QiPan::chessClick, this, &MainWindow::handleChessClickSlot);
+    connect(m_timer, &QTimer::timeout, this, &MainWindow::handleTimeoutSlot);
+
+    /* 随机数种子 */
+    srand(time(NULL));
+}
+
+
+void MainWindow::handleTimeoutSlot()
+{
+    m_qipan->setBoardInfo(m_delayRow, m_delayCol, COMPUTER);
+    /* 更新棋盘的画面 */
+    m_qipan->update();
+
+
+    if (m_qipan->isCheckWin(m_delayRow, m_delayCol, COMPUTER) == true)
+    {
+        QMessageBox::information(this, "游戏结束", "人机获胜");
+    }
 }
 
 /* 评估该坐标对于棋手的影响因素 */
@@ -152,14 +173,14 @@ void MainWindow::computerMove()
         }
     }
 
-    m_qipan->setBoardInfo(bestRow, bestCol, COMPUTER);
-    /* 更新棋盘的画面 */
-    m_qipan->update();
 
-
-    if (m_qipan->isCheckWin(bestRow, bestCol, COMPUTER) == true)
+    if (bestRow != -1 && bestCol != -1)
     {
-        QMessageBox::information(this, "游戏结束", "人机获胜");
+        m_delayRow = bestRow;
+        m_delayCol = bestCol;
+
+        int randnum = rand() % 500 + 500;
+        m_timer->start(randnum);
     }
 }
 

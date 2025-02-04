@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include "qipan.h"
-
+#include <QTimer>
 
 namespace Ui {
 class MainWindow;
@@ -19,7 +19,7 @@ public:
 public slots:
     /* 槽函数 */
     void handleChessClickSlot(int row, int col);
-
+    void handleTimeoutSlot();
 private:
     /* 人机下棋 */
     void computerMove();
@@ -30,6 +30,12 @@ private:
 
     /* 棋盘类 */
     QiPan * m_qipan;
+
+    /* 延时落子定时器 */
+    QTimer * m_timer;
+    /* 延时落子坐标 */
+    int m_delayRow;
+    int m_delayCol;
 };
 
 #endif // MAINWINDOW_H
